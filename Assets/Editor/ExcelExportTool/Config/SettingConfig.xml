@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <ExcelExportDirectory>../../Excel/Data</ExcelExportDirectory>
+  <XmlExportDirectory>./ExternalResources/Data/Xml</XmlExportDirectory>
+  <XmlBinExportDirectory>./Resources/Data/GameData</XmlBinExportDirectory>
+  <CsExportDirectory>./Scripts/Data/GameData</CsExportDirectory>
+</root>

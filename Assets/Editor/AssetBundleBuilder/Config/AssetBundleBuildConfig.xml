@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+
+    <!--把一个文件夹下所有依赖到的文件打成一个AssetBundle(包括子目录),优先级比SingleFilePath高-->
+    <!--
+    <IncludeAllFilePath>
+        <Path>Assets/Resources/Data/GameData/</Path>
+    </IncludeAllFilePath>
+    -->
+  
+    <!--单个文件打成一个AssetBundle的文件夹路径(包括子目录)，路径相对项目项目路径-->
+    <!--
+    <SingleFilePath>
+        <Path>Assets/Resources/Data/GameData/</Path>
+    </SingleFilePath>
+    -->
+</root>

@@ -1,0 +1,93 @@
+﻿/*
+	文件是由程序自动生成,请勿手动修改文件
+*/
+
+using System.Collections.Generic;
+using GameLogic.LogicModules;
+using UGCore;
+using UnityEngine;
+
+namespace Data.GameData
+{
+    public partial class $$ClassName$$ : GameDataBase
+    {
+		protected readonly static string Name = "$$ClassName$$";
+        protected static Dictionary<$$PrimaryKeyType$$, $$ClassName$$> m_DataMap = new Dictionary<$$PrimaryKeyType$$, $$ClassName$$>($$DataCount$$);
+        protected static bool m_DataIsLoaded;
+
+		public static int Count
+        {
+            get { return m_DataMap.Count; }
+        }
+
+		private $$ClassName$$()
+        {
+
+        }
+
+		private static $$ClassName$$ GetInstance()
+        {
+            return new $$ClassName$$();
+        }
+
+        public static $$ClassName$$ GetData($$PrimaryKeyType$$ key)
+        {
+			CheckDataValid();
+            return m_DataMap[key];
+        }
+
+        public static Dictionary<$$PrimaryKeyType$$, $$ClassName$$>.Enumerator GetEnumerator()
+        {
+			CheckDataValid();
+            return m_DataMap.GetEnumerator();
+        }
+
+        public static Dictionary<$$PrimaryKeyType$$, $$ClassName$$>.KeyCollection.Enumerator GetKeyEnumerator()
+        {
+			CheckDataValid();
+            return m_DataMap.Keys.GetEnumerator();
+        }
+
+        public static Dictionary<$$PrimaryKeyType$$, $$ClassName$$>.ValueCollection.Enumerator GetValueEnumerator()
+        {
+			CheckDataValid();
+            return m_DataMap.Values.GetEnumerator();
+        }
+
+		public override void LoadDone()
+        {
+			m_DataIsLoaded = true;
+        }
+
+		public override bool IsLoadDone()
+        {
+			return m_DataIsLoaded;
+        }
+
+		public override GameDataBase NewData()
+        {
+			return new $$ClassName$$();
+        }
+
+        protected static void CheckDataValid()
+        {
+            if (!m_DataIsLoaded)
+            {
+                var gameDataLoadModule = ModuleManager.Instance.GetGameModule(typeof(GameDataLoadModule).Name) as GameDataLoadModule;
+                gameDataLoadModule.LoadGameDataSync(Name);
+            }
+        }
+    }
+
+    public partial class $$ClassName$$
+    {
+$$properties$$
+		public override void SaveData()
+        {
+            $$primaryKeyOp$$
+        }
+		
+$$fields$$	
+		
+    }
+}
