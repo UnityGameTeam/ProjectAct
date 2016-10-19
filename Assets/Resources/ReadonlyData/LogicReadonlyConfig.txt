@@ -1,0 +1,4 @@
+{
+  "UseAssetBundle": false,
+  "LogOutputLevel": "Debug|Info|Warning|Except|Error|Fatal",
+}
