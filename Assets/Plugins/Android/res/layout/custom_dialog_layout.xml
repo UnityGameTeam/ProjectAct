@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/corners_bg" 
+    android:clickable="true"
+    android:padding="13.46dip" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="9dip"
+        android:paddingRight="9dip"
+        android:textSize="21sp"
+        android:textColor="#000000"/>
+    
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal" >
+        
+        <Button
+            android:id="@+id/negativeButton"
+            android:background="@drawable/button_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="36dip"
+            android:paddingLeft="14dip"
+            android:paddingRight="14dip"
+            android:textColor="#0B8C80"
+            android:textSize="14sp"/>
+        
+        <Button
+            android:id="@+id/positiveButton"
+            android:background="@drawable/button_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="36dip"
+            android:paddingLeft="14dip"
+            android:paddingRight="14dip"
+            android:textColor="#0B8C80"
+            android:layout_marginLeft="7dip"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:paddingLeft="9dip"
+        android:paddingRight="9dip"
+        android:gravity="left|center"
+        android:textSize="16sp"
+        android:textColor="#303030"
+        android:lineSpacingMultiplier="1.1"
+        android:layout_above="@id/bottom"
+        android:layout_marginBottom="6dp"
+        android:layout_below="@id/title" />
+
+</RelativeLayout>
