@@ -18,7 +18,6 @@ namespace GameLogic.LogicModules
         public const string PoiSearch_SearchSuccess = "QRCode_ScanQRCodeResult";
         public const string PoiSearch_SearchFailure = "Network_NetworkChanged";
         public const string HalfScreen_CommitInput = "HalfScreen_CommitInput";
-        public const string HalfScreen_OnTextChanged = "HalfScreen_OnTextChanged";
         public const string HalfScreen_DialogHide = "HalfScreen_DialogHide";
 
         private Dictionary<string, Action<string>> m_PlatformMessageMap;

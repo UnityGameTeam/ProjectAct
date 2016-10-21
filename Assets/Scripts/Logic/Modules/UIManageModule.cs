@@ -57,6 +57,7 @@ namespace GameLogic.LogicModules
             if (InputFieldEx.CurrentActiveInputFieldFx != null)
             {
                 InputFieldEx.CurrentActiveInputFieldFx.text = text;
+                InputFieldEx.CurrentActiveInputFieldFx.onEndEdit.Invoke(text);
                 InputFieldEx.CurrentActiveInputFieldFx = null;
             }
         }
@@ -75,6 +76,7 @@ namespace GameLogic.LogicModules
         {
             base.OnApplicationPause();
             AndroidUtility.HideEditDialog();
+            AndroidUtility.ImmersiveHideEditDialog();
         }
 
         protected void Update()

@@ -56,7 +56,7 @@ namespace UGCore.Utility
 #endif
         }
 
-        public static void InstallApk(string apkPath,bool exitGame = false)
+        public static void InstallApk(string apkPath, bool exitGame = false)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
                 _javaClass.CallStatic("installApk", apkPath, exitGame);
@@ -93,7 +93,7 @@ namespace UGCore.Utility
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             _javaClass.CallStatic("hideExitDialog");
-#endif           
+#endif
         }
 
         public static string GetPackageName()
@@ -157,7 +157,7 @@ namespace UGCore.Utility
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             _javaClass.CallStatic("takePhoto", type, width, height, savePath, fileName);
-#endif 
+#endif
         }
 
         /// <summary>
@@ -174,7 +174,8 @@ namespace UGCore.Utility
         /// <param name="pageIndex">搜索结果页码</param>
         /// <param name="pageSize">搜索结果单页数量</param>
         /// <param name="searchRadius">搜索范围默认2000米半径的圆内</param>
-        public static void GetPoiSearch(float latitude, float longitude, string keyword, int pageIndex = 1, int pageSize = 10, int searchRadius = 2000)
+        public static void GetPoiSearch(float latitude, float longitude, string keyword, int pageIndex = 1,
+            int pageSize = 10, int searchRadius = 2000)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             _javaClass.CallStatic("getPoiSearch", latitude, longitude, keyword, pageIndex, pageSize, searchRadius);
@@ -325,6 +326,44 @@ namespace UGCore.Utility
 #endif
         }
 
+        public static void ImmersiveHideEditDialog()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            _javaClass.CallStatic("immersiveHideEditDialog");
+#endif
+        }
+
+        public static bool ImmersiveEditDialogIsShowing()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return _javaClass.CallStatic<bool>("immersiveEditDialogIsShowing");
+#else
+            return false;
+#endif
+        }
+
+        public static void ImmersiveSetEditText(string text, string hintText)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            _javaClass.CallStatic("immersiveSetEditText",text,hintText);
+#endif
+        }
+
+        public static void ImmersiveShowEditDialog(string text, string hintText, int inputFlag, int inputMode,
+            int inputReturn, int alignment, int width, int height, int left,
+            int top, int textColorR, int textColorG, int textColorB,
+            int textColorA, int hintTextColorR, int hintTextColorG,
+            int hintTextColorB, int hintTextColorA, float textSize,
+            int maxLength, int fontStyle = 0)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            _javaClass.CallStatic("immersiveShowEditDialog", text, hintText, inputFlag, inputMode, inputReturn,
+                alignment, width, height, left, top, textColorR, textColorG, textColorB,
+                textColorA, hintTextColorR, hintTextColorG,
+                hintTextColorB, hintTextColorA, textSize,
+                maxLength, fontStyle);
+#endif
+        }
     }
 }
  

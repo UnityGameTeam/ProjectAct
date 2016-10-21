@@ -1,6 +1,7 @@
 ﻿using System;
 using GameLogic.Components;
 using GameLogic.Model;
+using UguiExtensions;
 using UGCore.Utility;
 using UGFoundation.Utility;
 using UnityEngine;
@@ -12,11 +13,19 @@ public class NewBehaviourScript : MonoBehaviour
     private ImageLoader bimageLoader;
 
     public Button b;
+
+    public InputFieldEx t;
     void Start ()
     {
         b.onClick.AddListener(() =>
         {
-          //  AndroidUtility.ShowEditDialog("12323", "ddd", 3, 40, 1, 6, 1, 100, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 30, 50, 300);
+            t.ActivateInputField();
+            t.onEndEdit.AddListener((str) =>
+            {
+                t.text = "这是回调啦";
+            });
+            //TouchScreenKeyboard.Open("1112", TouchScreenKeyboardType.Default,true, false, false, false, "1234567");
+            //  AndroidUtility.ShowEditDialog("12323", "ddd", 3, 40, 1, 6, 1, 100, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 30, 50, 300);
         });
     }
 	

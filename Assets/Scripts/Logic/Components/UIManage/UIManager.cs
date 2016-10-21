@@ -17,6 +17,7 @@ namespace GameLogic.Components
     //LoadingTipUI 添加超时功能
     //互斥处理，考虑做成配表的处理，现在先不处理了
     //释放先不处理
+    //动画处理等
     public class UIManager
     {
         private static UIManager _instance;

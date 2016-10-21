@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UGCore.Components;
 using UGCore.Utility;
 using UnityEngine;
 using UnityEngine.Events;
@@ -218,6 +219,36 @@ namespace UguiExtensions
         // Doesn't include dot and @ on purpose! See usage for details.
         const string kEmailSpecialCharacters = "!#$%&'*+-/=?^_`{|}~";
 
+        #region 移动平台Hint文本支持
+
+        [SerializeField] protected bool m_ShowHintMobileKeyboard;
+        public bool ShowHintMobileKeyboard
+        {
+            get { return m_ShowHintMobileKeyboard; }
+            set { m_ShowHintMobileKeyboard = value;}
+        }
+
+        protected Text m_PlaceholderText;
+        public Text PlaceholderText
+        {
+            get
+            {
+                if (m_PlaceholderText != null)
+                {
+                    return m_PlaceholderText;
+                }
+
+                if (m_Placeholder != null)
+                {
+                    m_PlaceholderText = m_Placeholder.GetComponent<Text>();
+                    return m_PlaceholderText;
+                }
+                return null;
+            }
+        }
+
+        #endregion
+
         #region 半屏模式支持
 
         public enum HalfScreenMode
@@ -246,11 +277,29 @@ namespace UguiExtensions
             }
         }
 
+        [NonSerialized] private Vector3[] m_WorldCorners = new Vector3[4];
+        [NonSerialized] private RectTransform m_RectTransform;
+
         [SerializeField] protected HalfScreenMode m_HalfScreenMode = HalfScreenMode.None; //半屏模式模式，仅android有效
         [SerializeField] protected string m_HalfScreenHintText = string.Empty;     //半屏用于没有文本时候的提示文本
         [SerializeField] protected string m_HalfScreenTitleTipText = string.Empty; //半屏顶部title文本提示
         [SerializeField] protected string m_HalfScreenButtonOkText = string.Empty;    //半屏顶部确认按钮文本
         [SerializeField] protected string m_HalfScreenButtonCancelText = string.Empty; //半屏顶部确认按钮取消文本
+
+        [SerializeField] protected int m_InputFlag = 3;
+        [SerializeField] protected int m_InputMode = 40;
+        [SerializeField] protected int m_InputReturn = 1;
+        [SerializeField] protected int m_MaxLength = 0; //暂时没用到
+        [SerializeField] protected int m_FontStyle = 0;
+        [SerializeField] protected int m_Alignment = 19;
+
+        public RectTransform rectTransform
+        {
+            get
+            {
+                return m_RectTransform ?? (m_RectTransform = GetComponent<RectTransform>());
+            }
+        }
 
         public string HalfScreenHintText
         {
@@ -298,6 +347,42 @@ namespace UguiExtensions
                     m_HalfScreenButtonCancelText = value;
                 }
             }
+        }
+
+        public int InputFlag
+        {
+            get { return m_InputFlag; }
+            set { m_InputFlag = value; }
+        }
+
+        public int InputMode
+        {
+            get { return m_InputMode; }
+            set { m_InputMode = value; }
+        }
+
+        public int InputReturn
+        {
+            get { return m_InputReturn; }
+            set { m_InputReturn = value; }
+        }
+
+        public int MaxLength
+        {
+            get { return m_MaxLength; }
+            set { m_MaxLength = value; }
+        }
+
+        public int FontStyle
+        {
+            get { return m_FontStyle; }
+            set { m_FontStyle = value; }
+        }
+
+        public int Alignment
+        {
+            get { return m_Alignment; }
+            set { m_Alignment = value; }
         }
 
         #endregion
@@ -1647,16 +1732,8 @@ namespace UguiExtensions
 
                 bool isEmpty = string.IsNullOrEmpty(fullText);
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-                if (m_HalfScreenMode != HalfScreenMode.ImmersiveMode)
-                {   
-                    if (m_Placeholder != null)
-                        m_Placeholder.enabled = isEmpty;
-                }
-#else
                 if (m_Placeholder != null)
                     m_Placeholder.enabled = isEmpty;
-#endif
 
                 // If not currently editing the text, set the visible range to the whole text.
                 // The UpdateLabel method will then truncate it to the part that fits inside the Text area.
@@ -2227,9 +2304,24 @@ namespace UguiExtensions
                         TouchScreenKeyboard.hideInput = shouldHideMobileInput;
                     }
 
-                    m_Keyboard = (inputType == InputType.Password) ?
-                    TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true) :
-                    TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+                    //m_Keyboard = (inputType == InputType.Password) ?
+                    //TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true) :
+                    //TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+                    if (inputType == InputType.Password)
+                    {
+                        m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true);
+                    }
+                    else
+                    {
+                        if (m_ShowHintMobileKeyboard && PlaceholderText != null)
+                        {
+                            m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine,false,false, PlaceholderText.text);
+                        }
+                        else
+                        {
+                            m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+                        }
+                    }    
 
                     // Mimics OnFocus but as mobile doesn't properly support select all
                     // just set it to the end of the text (where it would move when typing starts)
@@ -2241,9 +2333,25 @@ namespace UguiExtensions
                     TouchScreenKeyboard.hideInput = shouldHideMobileInput;
                 }
 
-                m_Keyboard = (inputType == InputType.Password) ?
-                    TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true) :
-                    TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+                //m_Keyboard = (inputType == InputType.Password) ?
+                //    TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true) :
+                //    TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+
+                if (inputType == InputType.Password)
+                {
+                    m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, false, multiLine, true);
+                }
+                else
+                {
+                    if (m_ShowHintMobileKeyboard && PlaceholderText != null)
+                    {
+                        m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine,false,false, PlaceholderText.text);
+                    }
+                    else
+                    {
+                        m_Keyboard = TouchScreenKeyboard.Open(m_Text, keyboardType, inputType == InputType.AutoCorrect, multiLine);
+                    }
+                }
 
                 // Mimics OnFocus but as mobile doesn't properly support select all
                 // just set it to the end of the text (where it would move when typing starts)
@@ -2265,8 +2373,54 @@ namespace UguiExtensions
 
         protected void OpenAndroidHalfScreenDialog()
         {
-            CurrentActiveInputFieldFx = this;
-            AndroidUtility.ShowEditDialog(m_Text, m_HalfScreenHintText, 3, 40, 1, m_HalfScreenTitleTipText,m_HalfScreenButtonCancelText,m_HalfScreenButtonOkText); 
+            if (m_HalfScreenMode == HalfScreenMode.ImmersiveMode && m_TextComponent.canvas.renderMode == RenderMode.ScreenSpaceCamera)
+            {
+                CurrentActiveInputFieldFx = this;
+                if (m_Placeholder != null)
+                    m_Placeholder.enabled = false;
+                if (m_TextComponent != null)
+                    m_TextComponent.enabled = false;
+
+                rectTransform.GetWorldCorners(m_WorldCorners);
+                for (int i = 0; i < m_WorldCorners.Length; ++i)
+                {
+                    m_WorldCorners[i] = RectTransformUtility.WorldToScreenPoint(m_TextComponent.canvas.worldCamera, m_WorldCorners[i]);
+                }
+
+                int height = (int)(m_WorldCorners[1].y - m_WorldCorners[0].y);
+                int top = (int)(Screen.height - m_WorldCorners[1].y);
+
+                m_TextComponent.rectTransform.GetWorldCorners(m_WorldCorners);
+                for (int i = 0; i < m_WorldCorners.Length; ++i)
+                {
+                    m_WorldCorners[i] = RectTransformUtility.WorldToScreenPoint(m_TextComponent.canvas.worldCamera, m_WorldCorners[i]);
+                }
+
+                int left = (int)m_WorldCorners[0].x;
+                int width = (int)(m_WorldCorners[2].x - m_WorldCorners[1].x);
+
+                var textSizeTop = RectTransformUtility.WorldToScreenPoint(m_TextComponent.canvas.worldCamera, rectTransform.TransformPoint(new Vector3(0,m_TextComponent.fontSize,0)));
+                var textSizeBottom = RectTransformUtility.WorldToScreenPoint(m_TextComponent.canvas.worldCamera, rectTransform.TransformPoint(Vector3.zero));
+                var fontSize = (int) (textSizeTop.y - textSizeBottom.y);
+
+                int textColorR = (int)(m_TextComponent.color.r * 255);
+                int textColorG = (int)(m_TextComponent.color.g * 255);
+                int textColorB = (int)(m_TextComponent.color.b * 255);
+                int textColorA = (int)(m_TextComponent.color.a * 255);
+
+                int hintTextColorR = m_PlaceholderText != null ? (int)(m_PlaceholderText.color.r * 255) : 128;
+                int hintTextColorG = m_PlaceholderText != null ? (int)(m_PlaceholderText.color.g * 255) : 128;
+                int hintTextColorB = m_PlaceholderText != null ? (int)(m_PlaceholderText.color.b * 255) : 128;
+                int hintTextColorA = m_PlaceholderText != null ? (int)(m_PlaceholderText.color.a * 255) : 255;
+
+                AndroidUtility.ImmersiveShowEditDialog(m_Text, m_HalfScreenHintText, m_InputFlag, m_InputMode, m_InputReturn, m_Alignment, width, height, left, top, textColorR, textColorG, textColorB, textColorA, hintTextColorR, hintTextColorG, hintTextColorB, hintTextColorA, fontSize, m_MaxLength, m_FontStyle);
+            }
+            else
+            {
+                CurrentActiveInputFieldFx = this;
+                AndroidUtility.ShowEditDialog(m_Text, m_HalfScreenHintText, m_InputFlag, m_InputMode, m_InputReturn, m_HalfScreenTitleTipText, m_HalfScreenButtonCancelText, m_HalfScreenButtonOkText);
+            }
+
         }
 
         public override void OnSelect(BaseEventData eventData)

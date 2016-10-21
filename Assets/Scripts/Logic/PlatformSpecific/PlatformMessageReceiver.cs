@@ -99,11 +99,6 @@ namespace GameLogic.PlatformSpecific
             m_PlatformMsgManageModule.TriggerPlatformMessage(PlatformMessageManageModule.HalfScreen_CommitInput, text);          
         }
 
-        public void HalfScreen_OnTextChanged(string text)
-        {
-            m_PlatformMsgManageModule.TriggerPlatformMessage(PlatformMessageManageModule.HalfScreen_OnTextChanged, text);
-        }
-
         public void HalfScreen_DialogHide(string result)
         {
             m_PlatformMsgManageModule.TriggerPlatformMessage(PlatformMessageManageModule.HalfScreen_DialogHide, result);      
