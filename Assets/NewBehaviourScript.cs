@@ -32,26 +32,33 @@ public class NewBehaviourScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-/*	    if (Input.GetKeyDown(KeyCode.A))
-	    {
-	        imageLoader.LoadImage("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg", imageLoader.GetSavePathByUrl("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg"),ri,true);
-	    }
-
-	    if (Input.GetKeyDown(KeyCode.D))
-	    {
-            imageLoader.LoadImage("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg", imageLoader.GetSavePathByUrl("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg"), ri, true,
-                () =>
-                {
-                    bimageLoader.LoadImage("http://www.cppblog.com/images/cppblog_com/ylemzy/b_25F1665EFE7011E2D2EF878AB4C18939.jpg", imageLoader.GetSavePathByUrl("http://www.cppblog.com/imasdfsaages/cppblog_com/ylemzy/b_25F1665EFE7011E2D2EF878AB4C18939.jpg"), ri, false);
-                    
-                });
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            bimageLoader.LoadImage("http://images2015.cnblogs.com/blog/916005/201606/916005-20160612193502902-1720204858.png", null, ri, true);
+            SoundManager.Instance.PlaySound("Jump", (int)SoundServiceId.FxSound);
+            SoundManager.Instance.PlaySound("Jump", (int)SoundServiceId.FxSound);
+            // SoundManager.Instance.PlaySound("Bg1", (int)SoundServiceId.BGSound);
+            //imageLoader.LoadImage("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg", imageLoader.GetSavePathByUrl("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg"),ri,true);
+        }
+        /*	    if (Input.GetKeyDown(KeyCode.A))
+                {
+                    imageLoader.LoadImage("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg", imageLoader.GetSavePathByUrl("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg"),ri,true);
+                }
 
-        }*/
- 
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    imageLoader.LoadImage("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg", imageLoader.GetSavePathByUrl("http://avatar.csdn.net/0/8/C/1_xoyojank.jpg"), ri, true,
+                        () =>
+                        {
+                            bimageLoader.LoadImage("http://www.cppblog.com/images/cppblog_com/ylemzy/b_25F1665EFE7011E2D2EF878AB4C18939.jpg", imageLoader.GetSavePathByUrl("http://www.cppblog.com/imasdfsaages/cppblog_com/ylemzy/b_25F1665EFE7011E2D2EF878AB4C18939.jpg"), ri, false);
+
+                        });
+                }
+
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    bimageLoader.LoadImage("http://images2015.cnblogs.com/blog/916005/201606/916005-20160612193502902-1720204858.png", null, ri, true);
+
+                }*/
+
     }
 }

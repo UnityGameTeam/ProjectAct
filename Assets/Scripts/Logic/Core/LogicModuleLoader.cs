@@ -23,6 +23,8 @@ namespace GameLogic.Core
             gameModulesList.Add(typeof(GameStartModule));
 
             gameModulesList.Add(typeof(UIManageModule));
+            gameModulesList.Add(typeof(SoundManageModule));
+
             gameModulesList.Add(typeof(InitializeBallModule));
 
             for (int i = 0; i < gameModulesList.Count; ++i)

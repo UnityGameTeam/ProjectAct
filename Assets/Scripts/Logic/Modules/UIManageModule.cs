@@ -10,8 +10,6 @@ namespace GameLogic.LogicModules
 {
     public class UIManageModule : GameModule
     {
-        public GameModule OwnerModule { get { return this; } }
-
         public override IEnumerator LoadModuleAsync()
         {
             //配置半屏聊天处理
